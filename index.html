@@ -1285,7 +1285,9 @@
         gap: 20px;
       }
       .mobile-toggle { display: block; }
-      .hero { padding: 140px 24px 80px; }
+      .hero { padding: 100px 20px 60px; }
+      .hero-scroll-wrapper { height: 150vh; }
+      .hero-video { width: 100vw; height: 100vh; object-fit: contain; }
       .section-inner { padding: 0 24px; }
       .section { padding: 80px 0; }
       .stats-inner { grid-template-columns: 1fr 1fr; gap: 32px; padding: 0 24px; }
@@ -1296,6 +1298,17 @@
       .footer-top { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
       .cta-inner { padding: 0 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-scroll-wrapper { height: 140vh; }
+      .hero-video { width: 100vw; height: 100vh; object-fit: contain; }
+      .hero h1 { font-size: clamp(24px, 5vw, 40px); }
+      .hero-sub { font-size: clamp(12px, 3vw, 14px); }
+      .cta-inner { padding: 0 16px; }
+      .cta-inner h2 { font-size: clamp(24px, 4vw, 40px); }
+      .cta-inner p { font-size: 13px; margin-bottom: 20px; }
+      .section { padding: 50px 0; }
     }
 
     /* ============================== ORBITAL TIMELINE ============================== */
@@ -2129,13 +2142,22 @@
       let currentSeekTime = 0;
       let seeking = false;
 
+      // Detectar se é dispositivo mobile para otimizar escala
+      const isMobile = window.innerWidth <= 767;
+      
       // 1. Fetch entire video as blob so it's fully in memory before seeking
+      // Em mobile, usa a mesma versão otimizada com ajuste de qualidade via CSS
       fetch('Images/717833fb-scroll-optimized.mp4')
         .then(res => res.blob())
         .then(blob => {
           const blobUrl = URL.createObjectURL(blob);
           video.src = blobUrl;
           video.load();
+          
+          // Adicionar atributo data para indicar que é mobile (útil para CSS/JS future)
+          if (isMobile) {
+            video.dataset.mobile = 'true';
+          }
         });
 
       // 2. Wait until browser can play through without buffering
