@@ -2129,13 +2129,22 @@
       let currentSeekTime = 0;
       let seeking = false;
 
+      // Detectar se é dispositivo mobile para otimizar escala
+      const isMobile = window.innerWidth <= 767;
+      
       // 1. Fetch entire video as blob so it's fully in memory before seeking
+      // Em mobile, usa a mesma versão otimizada com ajuste de qualidade via CSS
       fetch('Images/717833fb-scroll-optimized.mp4')
         .then(res => res.blob())
         .then(blob => {
           const blobUrl = URL.createObjectURL(blob);
           video.src = blobUrl;
           video.load();
+          
+          // Adicionar atributo data para indicar que é mobile (útil para CSS/JS future)
+          if (isMobile) {
+            video.dataset.mobile = 'true';
+          }
         });
 
       // 2. Wait until browser can play through without buffering
