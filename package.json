@@ -1,0 +1,17 @@
+{
+  "name": "falk-midia-website",
+  "version": "1.0.0",
+  "description": "Site da Falk Midia - Agencia de Marketing Digital",
+  "type": "module",
+  "scripts": {
+    "dev": "node serve.mjs"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.3.0",
+    "puppeteer": "^24.40.0"
+  },
+  "devDependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/util": "^0.12.1"
+  }
+}
